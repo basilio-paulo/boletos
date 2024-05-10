@@ -3,5 +3,5 @@ PRODWEB_CRED = {
 'user': "paulobasilio",
 'pass': "@Pb160600",
 'host': "15.229.38.137",
-'port': 5432
+'port': "5432"
 }
