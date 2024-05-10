@@ -2,9 +2,11 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from routes.gedprod import gedprod
+
 
 app = FastAPI(
-    title="Cloud Api",#API_DATA['PROJECT_NAME'],
+    title="",#API_DATA['PROJECT_NAME'],
     version="2024.04.0"#API_DATA['API_VERSION'],
 )
 
@@ -21,9 +23,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-from src.routes.clients import clients
 
-app.include_router(clients.router)
+
+app.include_router(gedprod.router)
 
 @app.get("/")
 def root():
