@@ -17,5 +17,4 @@ app.include_router(gedprod.router)
 def root():
     return {
         "message": "For documentation, access /docs, /redoc or /mkdocs",
-        "links": [f"{os.environ['DNS']}/docs", f"{os.environ['DNS']}/redoc", f"{os.environ['DNS']}/mkdocs"]
         }

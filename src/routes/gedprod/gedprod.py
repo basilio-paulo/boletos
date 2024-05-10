@@ -18,7 +18,7 @@ router = APIRouter(
     tags=["ERP"]
 )
 
-@router.put("/erp/gedprod/boletos", response_model=BasicServer)
+@router.put("/erp/boletos", response_model=BasicServer)
 
 def change_receipt_status(receipt_number: str, status_code: int
                           #, user: OIDCUser = Depends(CURRENT_USER)

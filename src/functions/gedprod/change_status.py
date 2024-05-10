@@ -7,8 +7,8 @@ def update_query(receipt_number:int, status_code: int, db_conn):
     prepared_query = \
         f"""
         UPDATE financas.titulos 
-        SET situacao = '{status_code}' 
-        WHERE numero = '{receipt_number}' 
+        SET situacao = {status_code} 
+        WHERE numero = '{receipt_number}'
         AND tenant = '47'
         ;"""
 
