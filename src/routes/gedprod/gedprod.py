@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status, BackgroundTasks
-from fastapi_keycloak import OIDCUser
 
-from roles.permissions import Method, verify_permission, CURRENT_USER
+
 from model.return_schemas import BasicServer
-from main import log_utility, log_billing
-from functions.utils.generic import Cronometer, ByteSize
+
 from functions.gedprod.change_status import change_status
 from typing import Union
 from vars.secrets import PRODWEB_CRED
+
+#from fastapi_keycloak import OIDCUser
+#from roles.permissions import Method, verify_permission, CURRENT_USER
+#from main import log_utility, log_billing
+#from functions.utils.generic import Cronometer, ByteSize
 
 router = APIRouter(
     tags=["ERP"]
@@ -17,8 +20,8 @@ router = APIRouter(
 
 @router.put("/erp/gedprod/boletos", response_model=BasicServer)
 
-def change_receipt_status(receipt_number: str, status_code: int, 
-                          #user: OIDCUser = Depends(CURRENT_USER)
+def change_receipt_status(receipt_number: str, status_code: int
+                          #, user: OIDCUser = Depends(CURRENT_USER)
                           ):
     """
     # <code class="highlight">/erp/gedprod/boletos</code>
