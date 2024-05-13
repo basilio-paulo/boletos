@@ -58,3 +58,4 @@ def change_receipt_status(receipt_number: str, status_code: int
     # log_billing.process_log(20, 'ERP API', user.preferred_username, f"/erp/gedprod/boletos", ByteSize.variable(result), time_finish, 200)
 
     return result
+
