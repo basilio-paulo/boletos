@@ -36,26 +36,27 @@ def change_receipt_status(receipt_number: str, status_code: int
         message: System message, if there is any;\n
         server_response: Response returned from the servers after execution.\n
     """
-    # authorized = verify_permission(Method['PUT'], user, "/erp/skyone/status")
+    # authorized = verify_permission(Method['PUT'], user, "/erp/boletos")
     # if not authorized:
     #     raise HTTPException(status_code=401, detail="User not Authorized")
-    # if status > 1 or status < 0:
-    #     raise HTTPException(status_code=code, detail="invalid operation")
     
     # cronometer = Cronometer()
 
     # time_finish = cronometer.elapsed_time()
 
+    if status_code > 1 or status_code < 0:
+         raise HTTPException(status_code=400, detail="invalid operation")
+
     result, err, code = change_status(receipt_number, status_code, PRODWEB_CRED)
 
     if err:
-        message = {'server': result[1], 'api': result[0]}
+        # message = {'server': result[1], 'api': result[0]}
         # log_utility.process_log(40, code, user.preferred_username, 'PUT', "/erp/gedprod/boletos", {}, message)
         # log_billing.process_log(40, 'ERP API', user.preferred_username, f"/erp/gedprod/boletos", ByteSize.variable(result), time_finish, code)
-        raise HTTPException(status_code=code, detail=result[0])
+        raise HTTPException(status_code=code, detail=result['message'])
 
     # log_utility.process_log(20, code, user.preferred_username, 'PUT', "/erp/gedprod/boletos", {}, result)
     # log_billing.process_log(20, 'ERP API', user.preferred_username, f"/erp/gedprod/boletos", ByteSize.variable(result), time_finish, 200)
-
+    
     return result
 

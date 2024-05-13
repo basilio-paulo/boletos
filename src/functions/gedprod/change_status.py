@@ -9,6 +9,7 @@ def update_query(receipt_number:str, status_code: int, db_conn):
         UPDATE financas.titulos 
         SET situacao = {status_code} 
         WHERE numero = '{receipt_number}'
+        AND situacao <> {status_code}
         AND tenant = '47'
         ;"""
 
@@ -18,10 +19,12 @@ def update_query(receipt_number:str, status_code: int, db_conn):
         FROM financas.titulos
         WHERE numero = '{receipt_number}'
         ;"""
+    
     response, err, cols = pg_query(check_query, db_conn)
+
     if not response:
-        print (response)
         return response, err, cols
+    
     response, err, cols = pg_query(prepared_query, db_conn)
 
     return response, err, cols
@@ -44,10 +47,17 @@ def change_status(receipt_number:str, status_code:int, PRODWEB_CRED: dict):
         result["status"] = "Failed"
         return (result, response), err, 500
     if not response:
+        err = True
         result["message"] = f"The receipt number: {receipt_number} is invalid or not exist in database."
         result["status"] = "Failed"
-        result["server_response"] = response
-        return result, err, 400    
+        result["server_response"] = "400"
+        return result, err, 400
+    if response == 'UPDATE 0':
+        err = True
+        result["message"] = f"The receipt number: {receipt_number} already has {status}."
+        result["status"] = "Failed"
+        result["server_response"] = "400"
+        return result, err, 400
     elif err:
         result["message"] = f"Unable to update status to {status} for receipt: {receipt_number}"
         result["status"] = "Failed"
